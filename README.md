@@ -11,7 +11,7 @@ It contains:
 
 ## Quickstart (code)
 
-Create a virtualenv (optional) and install dependencies:
+Create a virtualenv and install dependencies:
 ```bash
 python3.12 -m venv .venv
 . .venv/bin/activate
@@ -21,6 +21,11 @@ pip install -r requirements.txt
 Run the basic example:
 ```bash
 .venv/bin/python main.py --spec examples/sub.json
+```
+
+Run the “range redundancy” example:
+```bash
+.venv/bin/python main.py --spec examples/range_redundancy.json
 ```
 
 Run the simulation benchmark (writes to `outputs/`):
@@ -38,6 +43,11 @@ Run group-redundancy analysis (writes `outputs/group_redundancy_report.json`):
 Generate a human-like set of diverse examples under `examples/generated/`:
 ```bash
 .venv/bin/python -m tools.generate_examples --count 100 --seed 7 --out_dir examples/generated --validate --overwrite
+```
+
+Summarize the generated suite (writes to `outputs/`):
+```bash
+.venv/bin/python -m tools.summarize_generated_examples
 ```
 
 ## LaTeX report (RTL + Vazir)
