@@ -33,6 +33,13 @@ Run group-redundancy analysis (writes `outputs/group_redundancy_report.json`):
 .venv/bin/python main.py --spec examples/group_redundancy.json --group
 ```
 
+## Example set (100 realistic specs)
+
+Generate a human-like set of diverse examples under `examples/generated/`:
+```bash
+.venv/bin/python -m tools.generate_examples --count 100 --seed 7 --out_dir examples/generated --validate --overwrite
+```
+
 ## LaTeX report (RTL + Vazir)
 
 The report source is:
@@ -66,4 +73,3 @@ Those are not committed to GitHub.
 ## Template attribution
 
 See `docs/template_attribution.md`.
-

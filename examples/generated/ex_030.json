@@ -1,0 +1,60 @@
+{
+  "title": "Clamp a temperature reading to [0, 100]",
+  "story": "A temperature sensor may temporarily report values outside the safe operating range. Clamp the reading so downstream logic never sees out-of-range temperatures.",
+  "category": "sanitization/clamp",
+  "inputs": {
+    "sensor_temp": {
+      "min": -30,
+      "max": 140
+    }
+  },
+  "step_limit": 200,
+  "pre": [
+    "sensor_temp >= -200",
+    "sensor_temp <= 300",
+    "sensor_temp >= -30",
+    "sensor_temp <= 140"
+  ],
+  "post": [
+    "clamped_temp >= 0 and clamped_temp <= 100 and ((sensor_temp < 0 and clamped_temp == 0) or (sensor_temp > 100 and clamped_temp == 100) or (sensor_temp >= 0 and sensor_temp <= 100 and clamped_temp == sensor_temp))"
+  ],
+  "program": [
+    {
+      "assign": {
+        "clamped_temp": "sensor_temp"
+      }
+    },
+    {
+      "if": {
+        "cond": "sensor_temp < 0",
+        "then": [
+          {
+            "assign": {
+              "clamped_temp": "0"
+            }
+          }
+        ],
+        "else": [
+          {
+            "if": {
+              "cond": "sensor_temp > 100",
+              "then": [
+                {
+                  "assign": {
+                    "clamped_temp": "100"
+                  }
+                }
+              ],
+              "else": []
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "id": "ex_030",
+  "expected_redundant_pre": [
+    "sensor_temp >= -200",
+    "sensor_temp <= 300"
+  ]
+}

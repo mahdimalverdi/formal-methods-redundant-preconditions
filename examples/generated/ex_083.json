@@ -1,0 +1,51 @@
+{
+  "title": "Minimum of two values",
+  "story": "Pick the smaller of two candidate values (e.g., two shipping offers) and store it as the chosen minimum.",
+  "category": "branch/min",
+  "inputs": {
+    "left": {
+      "min": -10,
+      "max": 10
+    },
+    "right": {
+      "min": -10,
+      "max": 10
+    }
+  },
+  "step_limit": 80,
+  "pre": [
+    "left >= -10",
+    "right >= -10",
+    "left >= -20",
+    "right >= -20"
+  ],
+  "post": [
+    "min_ab <= left and min_ab <= right and ((left <= right and min_ab == left) or (left > right and min_ab == right))"
+  ],
+  "program": [
+    {
+      "if": {
+        "cond": "left <= right",
+        "then": [
+          {
+            "assign": {
+              "min_ab": "left"
+            }
+          }
+        ],
+        "else": [
+          {
+            "assign": {
+              "min_ab": "right"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "id": "ex_083",
+  "expected_redundant_pre": [
+    "left >= -20",
+    "right >= -20"
+  ]
+}

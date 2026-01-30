@@ -1,0 +1,47 @@
+{
+  "title": "Validate that `age` is within [1, 10]",
+  "story": "Set a boolean-like flag for whether an input value falls in the acceptable range.",
+  "category": "validation/range",
+  "inputs": {
+    "age": {
+      "min": -999,
+      "max": 999
+    }
+  },
+  "step_limit": 100,
+  "pre": [
+    "age >= -999",
+    "age <= 999",
+    "age >= -999",
+    "age <= 1010"
+  ],
+  "post": [
+    "(ok == 1 and age >= 1 and age <= 10) or (ok == 0 and (age < 1 or age > 10))"
+  ],
+  "program": [
+    {
+      "if": {
+        "cond": "age >= 1 and age <= 10",
+        "then": [
+          {
+            "assign": {
+              "ok": "1"
+            }
+          }
+        ],
+        "else": [
+          {
+            "assign": {
+              "ok": "0"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "id": "ex_059",
+  "expected_redundant_pre": [
+    "age >= -999",
+    "age <= 1010"
+  ]
+}

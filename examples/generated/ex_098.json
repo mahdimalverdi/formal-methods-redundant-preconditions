@@ -1,0 +1,47 @@
+{
+  "title": "Absolute value of an error signal",
+  "story": "Convert a signed error signal into its magnitude so it can be compared against a threshold.",
+  "category": "arithmetic/abs",
+  "inputs": {
+    "delta": {
+      "min": -30,
+      "max": 30
+    }
+  },
+  "step_limit": 50,
+  "pre": [
+    "delta >= -10",
+    "delta <= 10",
+    "delta >= -110",
+    "delta <= 110"
+  ],
+  "post": [
+    "abs_delta >= 0 and ((delta >= 0 and abs_delta == delta) or (delta < 0 and abs_delta == -delta))"
+  ],
+  "program": [
+    {
+      "if": {
+        "cond": "delta < 0",
+        "then": [
+          {
+            "assign": {
+              "abs_delta": "-delta"
+            }
+          }
+        ],
+        "else": [
+          {
+            "assign": {
+              "abs_delta": "delta"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "id": "ex_098",
+  "expected_redundant_pre": [
+    "delta >= -110",
+    "delta <= 110"
+  ]
+}

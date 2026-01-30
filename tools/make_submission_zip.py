@@ -7,7 +7,7 @@ import zipfile
 from pathlib import Path
 
 
-INCLUDE_FILES = [
+INCLUDE_PATHS = [
     "docs/final_report.md",
     "docs/final_report.tex",
     "docs/final_report.pdf",
@@ -18,6 +18,9 @@ INCLUDE_FILES = [
     "docs/arsclassica_structure_rtl.tex",
     "docs/arsclassica_sample.bib",
     "outputs/run_results.txt",
+    "outputs/sub_run.txt",
+    "outputs/range_redundancy_run.txt",
+    "outputs/group_redundancy_run.txt",
     "requirements.txt",
     "main.py",
     "fm_project/cli.py",
@@ -27,8 +30,11 @@ INCLUDE_FILES = [
     "make_submission_zip.py",
     "tools/make_submission_zip.py",
     "tools/install_vazir.py",
+    "tools/generate_examples.py",
     "examples/sub.json",
     "examples/group_redundancy.json",
+    "examples/range_redundancy.json",
+    "examples/generated",
     "docs/papers/542aec51ce80853093c4dafd6d81b17a.pdf",
     "docs/papers/Nicola_Redundant_Preconditions.pdf",
     "fonts/Vazirmatn-Regular.ttf",
@@ -37,6 +43,20 @@ INCLUDE_FILES = [
     "outputs/simulation_summary.txt",
     "outputs/group_redundancy_report.json",
 ]
+
+
+def _iter_files_to_zip(root: Path, rel_path: str) -> list[tuple[Path, str]]:
+    """Returns (absolute_path, archive_name) pairs for a file or directory."""
+    abs_path = root / rel_path
+    if abs_path.is_file():
+        return [(abs_path, rel_path)]
+    if abs_path.is_dir():
+        pairs: list[tuple[Path, str]] = []
+        for file_path in sorted(p for p in abs_path.rglob("*") if p.is_file()):
+            arcname = str(file_path.relative_to(root))
+            pairs.append((file_path, arcname))
+        return pairs
+    return []
 
 
 def main(argv: list[str]) -> int:
@@ -62,7 +82,7 @@ def main(argv: list[str]) -> int:
     root = Path(".").resolve()
     zip_path = root / zip_name
 
-    missing = [p for p in INCLUDE_FILES if not (root / p).exists()]
+    missing = [p for p in INCLUDE_PATHS if not (root / p).exists()]
     if missing:
         print("Missing required files:", file=sys.stderr)
         for p in missing:
@@ -70,8 +90,9 @@ def main(argv: list[str]) -> int:
         return 1
 
     with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as zf:
-        for rel in INCLUDE_FILES:
-            zf.write(root / rel, arcname=rel)
+        for rel in INCLUDE_PATHS:
+            for abs_path, arcname in _iter_files_to_zip(root, rel):
+                zf.write(abs_path, arcname=arcname)
 
     print(zip_name)
     return 0

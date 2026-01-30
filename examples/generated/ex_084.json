@@ -1,0 +1,53 @@
+{
+  "title": "Order a pair of bounds (swap if needed)",
+  "story": "Users may enter a range in any order. Normalize it so the output always satisfies lo <= hi.",
+  "category": "branch/swap",
+  "inputs": {
+    "from_": {
+      "min": -50,
+      "max": 50
+    },
+    "to": {
+      "min": -50,
+      "max": 50
+    }
+  },
+  "step_limit": 100,
+  "pre": [
+    "from_ >= -50",
+    "to >= -50",
+    "from_ >= -150",
+    "to >= -150"
+  ],
+  "post": [
+    "begin <= finish and ((from_ <= to and begin == from_ and finish == to) or (from_ > to and begin == to and finish == from_))"
+  ],
+  "program": [
+    {
+      "if": {
+        "cond": "from_ <= to",
+        "then": [
+          {
+            "assign": {
+              "begin": "from_",
+              "finish": "to"
+            }
+          }
+        ],
+        "else": [
+          {
+            "assign": {
+              "begin": "to",
+              "finish": "from_"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "id": "ex_084",
+  "expected_redundant_pre": [
+    "from_ >= -150",
+    "to >= -150"
+  ]
+}

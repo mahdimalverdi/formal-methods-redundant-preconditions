@@ -1,0 +1,47 @@
+{
+  "title": "Validate that `score` is within [0, 100]",
+  "story": "Set a boolean-like flag for whether an input value falls in the acceptable range.",
+  "category": "validation/range",
+  "inputs": {
+    "score": {
+      "min": -999,
+      "max": 999
+    }
+  },
+  "step_limit": 100,
+  "pre": [
+    "score >= -999",
+    "score <= 999",
+    "score >= -1000",
+    "score <= 1100"
+  ],
+  "post": [
+    "(is_valid == 1 and score >= 0 and score <= 100) or (is_valid == 0 and (score < 0 or score > 100))"
+  ],
+  "program": [
+    {
+      "if": {
+        "cond": "score >= 0 and score <= 100",
+        "then": [
+          {
+            "assign": {
+              "is_valid": "1"
+            }
+          }
+        ],
+        "else": [
+          {
+            "assign": {
+              "is_valid": "0"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "id": "ex_092",
+  "expected_redundant_pre": [
+    "score >= -1000",
+    "score <= 1100"
+  ]
+}

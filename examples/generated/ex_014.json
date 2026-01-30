@@ -1,0 +1,47 @@
+{
+  "title": "Capped increment (do not exceed 10)",
+  "story": "Increment a counter only if it is below a fixed limit (e.g., max retry attempts).",
+  "category": "branch/cap",
+  "inputs": {
+    "counter": {
+      "min": -2,
+      "max": 13
+    }
+  },
+  "step_limit": 80,
+  "pre": [
+    "counter >= 0",
+    "counter <= 13",
+    "counter >= -100",
+    "counter <= 1009"
+  ],
+  "post": [
+    "(counter < 10 and updated == counter + 1) or (counter >= 10 and updated == counter)"
+  ],
+  "program": [
+    {
+      "if": {
+        "cond": "counter < 10",
+        "then": [
+          {
+            "assign": {
+              "updated": "counter + 1"
+            }
+          }
+        ],
+        "else": [
+          {
+            "assign": {
+              "updated": "counter"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "id": "ex_014",
+  "expected_redundant_pre": [
+    "counter >= -100",
+    "counter <= 1009"
+  ]
+}

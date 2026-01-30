@@ -1,0 +1,33 @@
+{
+  "title": "Normalize minutes into a clock minute (0..59)",
+  "story": "Given a minute offset (possibly outside 0..59), normalize it to the equivalent clock minute.",
+  "category": "arithmetic/mod",
+  "inputs": {
+    "raw_minute": {
+      "min": -120,
+      "max": 120
+    }
+  },
+  "step_limit": 50,
+  "pre": [
+    "raw_minute >= -120",
+    "raw_minute <= 120",
+    "raw_minute >= -10000",
+    "raw_minute <= 10000"
+  ],
+  "post": [
+    "normalized_minute >= 0 and normalized_minute < 60"
+  ],
+  "program": [
+    {
+      "assign": {
+        "normalized_minute": "raw_minute % 60"
+      }
+    }
+  ],
+  "id": "ex_093",
+  "expected_redundant_pre": [
+    "raw_minute >= -10000",
+    "raw_minute <= 10000"
+  ]
+}

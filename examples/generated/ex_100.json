@@ -1,0 +1,55 @@
+{
+  "title": "Remainder by repeated subtraction (packing items)",
+  "story": "A warehouse packs items into fixed-size boxes. Compute how many full boxes fit and how many items remain unpacked using repeated subtraction.",
+  "category": "loop/arithmetic",
+  "inputs": {
+    "amount": {
+      "min": -2,
+      "max": 20
+    },
+    "bucket": {
+      "min": -1,
+      "max": 10
+    }
+  },
+  "step_limit": 400,
+  "pre": [
+    "amount >= 0",
+    "bucket > 0",
+    "amount >= -10",
+    "bucket >= 1"
+  ],
+  "post": [
+    "amount == count*bucket + left and left >= 0 and left < bucket"
+  ],
+  "program": [
+    {
+      "assign": {
+        "left": "amount",
+        "count": "0"
+      }
+    },
+    {
+      "while": {
+        "cond": "left >= bucket",
+        "body": [
+          {
+            "assign": {
+              "left": "left - bucket"
+            }
+          },
+          {
+            "assign": {
+              "count": "count + 1"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "id": "ex_100",
+  "expected_redundant_pre": [
+    "amount >= -10",
+    "bucket >= 1"
+  ]
+}

@@ -1,0 +1,20 @@
+Spec: examples/range_redundancy.json
+Inputs considered: 64
+Inputs satisfying pre: 24 (37.50%)
+Violations (bounded): 0
+Nontermination (step_limit=10000): 0
+
+Single precondition redundancy (bounded verifier-based check):
+- pre1: NEEDED | N >= 0
+- pre2: REDUNDANT | N <= 3
+- pre3: REDUNDANT | M >= 0
+
+Implication checking (bounded, IC-like):
+- pre1: NOT implied | N >= 0
+- pre2: NOT implied | N <= 3
+- pre3: NOT implied | M >= 0
+
+Variable usage (syntactic):
+- vars(pre): ['M', 'N']
+- vars(post): ['y']
+

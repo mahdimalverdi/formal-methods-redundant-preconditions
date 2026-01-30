@@ -1,0 +1,21 @@
+Spec: examples/group_redundancy.json
+Inputs considered: 25
+Inputs satisfying pre: 1 (4.00%)
+Violations (bounded): 0
+Nontermination (step_limit=1000): 0
+
+Single precondition redundancy (bounded verifier-based check):
+- pre1: REDUNDANT | a == 0
+- pre2: REDUNDANT | b == 0
+- pre3: REDUNDANT | a == b
+
+Implication checking (bounded, IC-like):
+- pre1: IMPLIED | a == 0
+- pre2: IMPLIED | b == 0
+- pre3: IMPLIED | a == b
+
+Variable usage (syntactic):
+- vars(pre): ['a', 'b']
+- vars(post): ['a', 'b']
+
+Wrote outputs/group_redundancy_report.json

@@ -1,0 +1,60 @@
+{
+  "title": "Clamp a temperature reading to [-20, 60]",
+  "story": "A temperature sensor may temporarily report values outside the safe operating range. Clamp the reading so downstream logic never sees out-of-range temperatures.",
+  "category": "sanitization/clamp",
+  "inputs": {
+    "temp_c": {
+      "min": -50,
+      "max": 100
+    }
+  },
+  "step_limit": 200,
+  "pre": [
+    "temp_c >= -220",
+    "temp_c <= 260",
+    "temp_c >= -50",
+    "temp_c <= 100"
+  ],
+  "post": [
+    "temp_safe >= -20 and temp_safe <= 60 and ((temp_c < -20 and temp_safe == -20) or (temp_c > 60 and temp_safe == 60) or (temp_c >= -20 and temp_c <= 60 and temp_safe == temp_c))"
+  ],
+  "program": [
+    {
+      "assign": {
+        "temp_safe": "temp_c"
+      }
+    },
+    {
+      "if": {
+        "cond": "temp_c < -20",
+        "then": [
+          {
+            "assign": {
+              "temp_safe": "-20"
+            }
+          }
+        ],
+        "else": [
+          {
+            "if": {
+              "cond": "temp_c > 60",
+              "then": [
+                {
+                  "assign": {
+                    "temp_safe": "60"
+                  }
+                }
+              ],
+              "else": []
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "id": "ex_057",
+  "expected_redundant_pre": [
+    "temp_c >= -220",
+    "temp_c <= 260"
+  ]
+}

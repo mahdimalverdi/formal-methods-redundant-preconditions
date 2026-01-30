@@ -1,0 +1,51 @@
+{
+  "title": "Sum of the first N integers (loop invariant style)",
+  "story": "Compute the sum 1+2+...+N using a loop, then check the classic closed form relation 2*sum == N*(N+1).",
+  "category": "loop/summation",
+  "inputs": {
+    "n_days": {
+      "min": -5,
+      "max": 10
+    }
+  },
+  "step_limit": 800,
+  "pre": [
+    "n_days >= 0",
+    "n_days <= 10",
+    "n_days >= -100",
+    "n_days <= 110"
+  ],
+  "post": [
+    "2*total == n_days*(n_days + 1) and k == n_days + 1"
+  ],
+  "program": [
+    {
+      "assign": {
+        "total": "0",
+        "k": "1"
+      }
+    },
+    {
+      "while": {
+        "cond": "k <= n_days",
+        "body": [
+          {
+            "assign": {
+              "total": "total + k"
+            }
+          },
+          {
+            "assign": {
+              "k": "k + 1"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "id": "ex_011",
+  "expected_redundant_pre": [
+    "n_days >= -100",
+    "n_days <= 110"
+  ]
+}

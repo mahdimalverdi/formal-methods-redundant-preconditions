@@ -1,0 +1,47 @@
+{
+  "title": "Validate that `level` is within [1, 10]",
+  "story": "Set a boolean-like flag for whether an input value falls in the acceptable range.",
+  "category": "validation/range",
+  "inputs": {
+    "level": {
+      "min": -100,
+      "max": 200
+    }
+  },
+  "step_limit": 100,
+  "pre": [
+    "level >= -100",
+    "level <= 200",
+    "level >= -999",
+    "level <= 1010"
+  ],
+  "post": [
+    "(ok == 1 and level >= 1 and level <= 10) or (ok == 0 and (level < 1 or level > 10))"
+  ],
+  "program": [
+    {
+      "if": {
+        "cond": "level >= 1 and level <= 10",
+        "then": [
+          {
+            "assign": {
+              "ok": "1"
+            }
+          }
+        ],
+        "else": [
+          {
+            "assign": {
+              "ok": "0"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "id": "ex_024",
+  "expected_redundant_pre": [
+    "level >= -999",
+    "level <= 1010"
+  ]
+}

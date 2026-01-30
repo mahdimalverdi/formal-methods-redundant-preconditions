@@ -1,0 +1,47 @@
+{
+  "title": "Absolute value of an error signal",
+  "story": "Convert a signed error signal into its magnitude so it can be compared against a threshold.",
+  "category": "arithmetic/abs",
+  "inputs": {
+    "err": {
+      "min": -70,
+      "max": 70
+    }
+  },
+  "step_limit": 50,
+  "pre": [
+    "err >= -50",
+    "err <= 50",
+    "err >= -150",
+    "err <= 150"
+  ],
+  "post": [
+    "err_mag >= 0 and ((err >= 0 and err_mag == err) or (err < 0 and err_mag == -err))"
+  ],
+  "program": [
+    {
+      "if": {
+        "cond": "err < 0",
+        "then": [
+          {
+            "assign": {
+              "err_mag": "-err"
+            }
+          }
+        ],
+        "else": [
+          {
+            "assign": {
+              "err_mag": "err"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "id": "ex_071",
+  "expected_redundant_pre": [
+    "err >= -150",
+    "err <= 150"
+  ]
+}

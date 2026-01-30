@@ -224,8 +224,10 @@ def run_simulation(*, num_programs: int, seed: int) -> dict[str, Any]:
     }
 
     for i in range(num_programs):
-        # Keep implication condition implied by N >= 0 by choosing n_min <= 0.
-        n_min = rng.choice([-5, -4, -3, -2, -1, 0])
+        # Keep implication condition strictly weaker than `N >= 0` by choosing n_min < 0.
+        # (If n_min == 0, the "implication" precondition becomes a duplicate, which
+        # breaks the intended interpretation of "exactly one necessary precondition".)
+        n_min = rng.choice([-5, -4, -3, -2, -1])
         n_max = rng.choice([6, 7, 8, 9, 10])
         m_min = rng.choice([-5, -4, -3])
         m_max = rng.choice([3, 4, 5])
@@ -292,4 +294,3 @@ def write_outputs(
         "",
     ]
     text_path.write_text("\n".join(lines), encoding="utf-8")
-
