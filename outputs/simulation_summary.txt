@@ -1,0 +1,11 @@
+Programs: 39
+Seed: 1
+
+Detected redundant preconditions (count of true redundant of each type):
+
+type           true   IC-like   DC-like   VC(semantic)
+independency     39         0        39            39
+implication      39        39         0            39
+range            39         0         0            39
+
+total           117        39        39           117

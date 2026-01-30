@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Minimal shim for LaTeX Workshop "clean" integration.
+# We use Tectonic for builds, but LaTeX Workshop may invoke `latexmk -c` on errors.
+# This script implements a no-op (exit 0) to avoid ENOENT failures.
+
+exit 0
+

@@ -1,0 +1,100 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Arsclassica Article (RTL/Vazir adaptation)
+%
+% Based on LaTeXTemplates "Arsclassica Article" structure.tex
+% Source: https://www.latextemplates.com/template/arsclassica-article
+% License: CC BY-NC-SA 3.0 (see docs/template_attribution.md)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	REQUIRED PACKAGES
+%----------------------------------------------------------------------------------------
+
+% NOTE: The original Arsclassica template relies on classicthesis/arsclassica,
+% which select Latin fonts that may not be available in a portable XeLaTeX
+% toolchain (e.g. Tectonic). For a robust RTL build, we use a lighter set of
+% packages while keeping the KOMA-Script article base class (`scrartcl`).
+
+\usepackage{graphicx}
+\graphicspath{{papers/}{Figures/}}
+
+\usepackage{enumitem}
+
+% math / theorems
+\usepackage{amsmath,amssymb,amsthm}
+
+\usepackage{varioref}
+
+\usepackage{booktabs}
+\usepackage{xcolor}
+\definecolor{halfgray}{gray}{0.55}
+\definecolor{webbrown}{rgb}{.6,0,0}
+\definecolor{webgreen}{rgb}{0,.5,0}
+\definecolor{RoyalBlue}{rgb}{0.25,0.41,0.88}
+
+\usepackage{hyperref}
+\usepackage{xurl} % Better URL line breaking (underscores, etc.)
+
+%----------------------------------------------------------------------------------------
+%	PERSIAN / RTL + FONTS (Vazir)
+%----------------------------------------------------------------------------------------
+
+\usepackage{xepersian}
+\settextfont[
+  Path=../fonts/,
+  BoldFont=Vazirmatn-Bold.ttf
+]{Vazirmatn-Regular.ttf}
+\setdigitfont[
+  Path=../fonts/,
+  BoldFont=Vazirmatn-Bold.ttf
+]{Vazirmatn-Regular.ttf}
+\setsansfont[
+  Path=../fonts/,
+  BoldFont=Vazirmatn-Bold.ttf
+]{Vazirmatn-Regular.ttf}
+\setlatintextfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}
+
+% Headers/footers (load after bidi/xepersian for correct RTL handling)
+\usepackage{scrlayer-scrpage}
+\clearpairofpagestyles
+\ihead{\RL{\rightmark}}
+\ohead{\thepage}
+\pagestyle{scrheadings}
+
+\renewcommand{\sectionmark}[1]{\markright{\RL{#1}}}
+
+% Ensure KOMA heading/title fonts use the Persian main font (avoid Latin defaults).
+\setkomafont{disposition}{\rmfamily\bfseries}
+\setkomafont{title}{\rmfamily\bfseries\LARGE}
+\setkomafont{author}{\rmfamily}
+\setkomafont{date}{\rmfamily}
+\setkomafont{pagehead}{\rmfamily}
+\setkomafont{pagefoot}{\rmfamily}
+
+%----------------------------------------------------------------------------------------
+%	THEOREM STYLES
+%---------------------------------------------------------------------------------------
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+
+\theoremstyle{remark}
+
+%----------------------------------------------------------------------------------------
+%	HYPERLINKS
+%---------------------------------------------------------------------------------------
+
+\hypersetup{
+  colorlinks=true,
+  breaklinks=true,
+  bookmarks=true,
+  bookmarksnumbered,
+  urlcolor=webbrown,
+  linkcolor=RoyalBlue,
+  citecolor=webgreen,
+  pdfcreator={XeLaTeX}
+}

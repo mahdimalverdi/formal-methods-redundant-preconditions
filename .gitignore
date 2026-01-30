@@ -1,0 +1,30 @@
+## Python
+.venv/
+__pycache__/
+*.pyc
+
+## IDE
+.idea/
+.vscode/settings.json.bak
+
+## Local tools/binaries
+tools/bin/tectonic
+tools/bin/tectonic.exe
+tools/bin/*.tar.gz
+
+## Generated artifacts
+*.zip
+docs/*.aux
+docs/*.log
+docs/*.out
+docs/*.synctex.gz
+
+## External PDFs (keep out of GitHub)
+docs/papers/*.pdf
+
+## Local fonts (can be installed via script)
+fonts/*.ttf
+
+/.venv/
+/.vscode/
+/STUDENTNAME_0000000000.zip

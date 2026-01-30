@@ -1,0 +1,17 @@
+{
+  "inputs": {
+    "a": { "min": -2, "max": 2 },
+    "b": { "min": -2, "max": 2 }
+  },
+  "step_limit": 1000,
+  "pre": [
+    "a == 0",
+    "b == 0",
+    "a == b"
+  ],
+  "post": [
+    "a == 0 and b == 0"
+  ],
+  "program": []
+}
+

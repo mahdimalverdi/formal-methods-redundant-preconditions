@@ -1,0 +1,15 @@
+{
+  "single_redundant_indices": [
+    0,
+    1,
+    2
+  ],
+  "greedy_group_indices": [
+    0
+  ],
+  "all_single_is_group_redundant": false,
+  "counterexample_if_not_group": {
+    "a": -2,
+    "b": -2
+  }
+}

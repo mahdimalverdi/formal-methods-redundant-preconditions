@@ -1,0 +1,26 @@
+{
+  "num_programs": 39,
+  "seed": 1,
+  "totals": {
+    "true": {
+      "independency": 39,
+      "implication": 39,
+      "range": 39
+    },
+    "ic": {
+      "independency": 0,
+      "implication": 39,
+      "range": 0
+    },
+    "dc": {
+      "independency": 39,
+      "implication": 0,
+      "range": 0
+    },
+    "vc": {
+      "independency": 39,
+      "implication": 39,
+      "range": 39
+    }
+  }
+}

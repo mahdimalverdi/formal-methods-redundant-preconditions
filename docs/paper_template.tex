@@ -1,0 +1,86 @@
+% !TeX program = xelatex
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{fancyhdr}
+
+% Persian / RTL
+\usepackage{xepersian}
+
+% Vazir-family (Vazirmatn) — expects fonts in ../fonts/ when compiling from docs/
+\settextfont[
+  Path=../fonts/,
+  BoldFont=Vazirmatn-Bold.ttf
+]{Vazirmatn-Regular.ttf}
+\setdigitfont[
+  Path=../fonts/,
+  BoldFont=Vazirmatn-Bold.ttf
+]{Vazirmatn-Regular.ttf}
+
+% Latin font (keep a safe default that exists on most systems/tectonic)
+\setlatintextfont{DejaVu Sans}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue
+}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  columns=fullflexible,
+  frame=single,
+  rulecolor=\color{black!20}
+}
+
+\setlist[itemize]{noitemsep, topsep=0.25em}
+\setlist[enumerate]{noitemsep, topsep=0.25em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{عنوان مقاله}
+\lhead{نام نویسنده}
+\cfoot{\thepage}
+
+\title{عنوان مقاله}
+\author{نام نویسنده \\ \lr{\texttt{شماره}}}
+\date{\lr{2026-01-30}}
+
+\begin{document}
+\maketitle
+
+\begin{RTL}
+
+\begin{abstract}
+خلاصه‌ی کوتاه مقاله/گزارش (حدود ۵ تا ۸ خط). در صورت نیاز از \lr{English terms} با \lr{\texttt{\textbackslash lr}} استفاده کنید.
+\end{abstract}
+
+\textbf{کلمات کلیدی:} روش‌های صوری، قراردادها، پیش‌شرط، افزونگی
+
+\section{مقدمه}
+متن مقدمه.
+
+\section{روش/پیاده‌سازی}
+توضیح روش و جزئیات اجرا.
+
+\section{نتایج}
+نتایج آزمایش/شبیه‌سازی.
+
+\section{جمع‌بندی}
+جمع‌بندی و کارهای آینده.
+
+\section*{منابع}
+\begin{enumerate}
+  \item \lr{N. Thoben, H. Wehrheim, ``Detecting Redundant Preconditions,'' FormaliSE 2025.}
+\end{enumerate}
+
+\end{RTL}
+\end{document}
+

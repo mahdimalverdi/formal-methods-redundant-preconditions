@@ -1,0 +1,32 @@
+{
+  "inputs": {
+    "N": { "min": -3, "max": 5 },
+    "M": { "min": -3, "max": 5 }
+  },
+  "step_limit": 10000,
+  "pre": [
+    "N >= 0",
+    "N <= 1000",
+    "N >= -100",
+    "M >= 0"
+  ],
+  "post": [
+    "y == 0"
+  ],
+  "program": [
+    { "assign": { "x": "0" } },
+    { "assign": { "y": "N" } },
+    { "assign": { "z": "M" } },
+    {
+      "while": {
+        "cond": "x < N",
+        "body": [
+          { "assign": { "x": "x + 1" } },
+          { "assign": { "y": "y - 1" } },
+          { "assign": { "z": "z - 1" } }
+        ]
+      }
+    }
+  ]
+}
+

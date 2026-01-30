@@ -1,0 +1,22 @@
+Spec: examples/sub.json
+Inputs considered: 81
+Inputs satisfying pre: 36 (44.44%)
+Violations (bounded): 0
+Nontermination (step_limit=10000): 0
+
+Single precondition redundancy (bounded verifier-based check):
+- pre1: NEEDED | N >= 0
+- pre2: REDUNDANT | N <= 1000
+- pre3: REDUNDANT | N >= -100
+- pre4: REDUNDANT | M >= 0
+
+Implication checking (bounded, IC-like):
+- pre1: NOT implied | N >= 0
+- pre2: IMPLIED | N <= 1000
+- pre3: IMPLIED | N >= -100
+- pre4: NOT implied | M >= 0
+
+Variable usage (syntactic):
+- vars(pre): ['M', 'N']
+- vars(post): ['y']
+
