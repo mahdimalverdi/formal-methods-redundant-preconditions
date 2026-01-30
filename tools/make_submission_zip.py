@@ -8,6 +8,7 @@ from pathlib import Path
 
 
 INCLUDE_PATHS = [
+    "README.md",
     "docs/final_report.md",
     "docs/final_report.tex",
     "docs/final_report.pdf",
