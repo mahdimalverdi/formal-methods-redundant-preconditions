@@ -1,0 +1,17 @@
+Generated examples dir: examples/generated
+Examples: 100
+
+Averages:
+- #pre: 4.00
+- needed: 0.23
+- redundant: 3.77
+- IC-like implied: 3.46
+
+Counts:
+- all preconditions redundant: 77
+- has at least one needed precondition: 23
+
+Ranges:
+- pre: [4, 4]
+- needed: [0, 1]
+- redundant: [3, 4]

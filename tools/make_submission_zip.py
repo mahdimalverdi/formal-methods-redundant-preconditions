@@ -31,6 +31,7 @@ INCLUDE_PATHS = [
     "tools/make_submission_zip.py",
     "tools/install_vazir.py",
     "tools/generate_examples.py",
+    "tools/summarize_generated_examples.py",
     "examples/sub.json",
     "examples/group_redundancy.json",
     "examples/range_redundancy.json",
@@ -42,6 +43,8 @@ INCLUDE_PATHS = [
     "outputs/simulation_report.json",
     "outputs/simulation_summary.txt",
     "outputs/group_redundancy_report.json",
+    "outputs/generated_examples_summary.json",
+    "outputs/generated_examples_summary.txt",
 ]
 
 

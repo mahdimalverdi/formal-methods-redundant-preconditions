@@ -73,20 +73,26 @@ BCOR5mm
 \subsection{تکنیک‌های پیشنهادی برای کشف افزونگی}
 مقاله سه تکنیک با توازن متفاوت بین دقت و هزینه ارائه می‌دهد:
 
-\paragraph{۱) \lr{IC} — بررسی استنتاج منطقی \lrpar{Implication Checking}}
-در این روش خودِ پیش‌شرط‌ها با هم مقایسه می‌شوند و برنامه/پس‌شرط به‌صورت مستقیم وارد تحلیل نمی‌شود.
-ایده: اگر یک پیش‌شرط از ترکیب سایر پیش‌شرط‌ها نتیجه شود، در حضور آن‌ها اضافه است.
-مقاله همچنین توضیح می‌دهد که افزونگی تکی لزوماً به افزونگی گروهی تبدیل نمی‌شود؛ برای همین یک رویه‌ی تکراری برای بررسی حذف گروهیِ پیش‌شرط‌های «قابل‌نتیجه‌گیری» ارائه می‌کند.
+\subsubsection{۱) \lr{IC} — بررسی استنتاج منطقی \lrpar{Implication Checking}}
+\begin{itemize}
+  \item \textbf{ایده:} آیا \lr{\texttt{pre\_i}} از سایر پیش‌شرط‌ها نتیجه می‌شود؟
+  \item \textbf{ورودی/خروجی:} فقط \lr{Pre}؛ خروجیِ هر پیش‌شرط: \lrpar{implied / not implied}.
+  \item \textbf{نقطه‌ضعف:} افزونگیِ وابسته به رفتار برنامه را لزوماً نمی‌گیرد (مثل بسیاری از موارد \lr{Range}).
+\end{itemize}
 
-\paragraph{۲) \lr{DC} — تحلیل وابستگی \lrpar{Dependency Calculation}}
-در این روش، برنامه به صورت \lr{CFA} توسعه‌یافته (با یال‌های \lr{assume/assert} و مکان خطا) مدل می‌شود و سپس وابستگی‌های داده/کنترل بین پیش‌شرط‌ها و پس‌شرط‌ها بررسی می‌شود.
-اگر یک پیش‌شرط به هیچ پس‌شرطی (از منظر وابستگی نحوی) وابسته نباشد، می‌توان آن را زائد فرض کرد.
-این روش سریع است، اما چون صرفاً وابستگی‌های \textbf{نحوی} را می‌بیند، ممکن است پیش‌شرطی که وابستگی نحوی دارد ولی از نظر معنایی لازم نیست را زائد تشخیص ندهد.
+\subsubsection{۲) \lr{DC} — تحلیل وابستگی \lrpar{Dependency Calculation}}
+\begin{itemize}
+  \item \textbf{ایده:} اگر پیش‌شرط به هیچ پس‌شرطی (از منظر وابستگی داده/کنترل) نرسد، زائد فرض می‌شود.
+  \item \textbf{ورودی/خروجی:} برنامه به‌صورت \lr{CFA} توسعه‌یافته + قرارداد؛ خروجی: پیش‌شرط‌های \lrpar{dependency-free}.
+  \item \textbf{نقطه‌ضعف:} چون نحوی است، ممکن است افزونگی‌های معنایی را از دست بدهد.
+\end{itemize}
 
-\paragraph{۳) \lr{PC} — تحلیل گزاره‌ای/انتزاعی \lrpar{Predicate Checking}}
-این روش یک بار تحلیل گزاره‌ای را اجرا می‌کند تا \lr{ARG} ساخته شود.
-ایده‌ی کلیدی: اگر در یال متناظر با یک پیش‌شرط \lrpar{\texttt{assume(b)}}، گزاره‌ی انتزاعی قبل و بعد از آن تغییری نکند (یعنی اضافه شدن آن پیش‌شرط در محاسبه‌ی انتزاع اثر نگذارد)، آن پیش‌شرط در این اثبات «لازم» نبوده و می‌تواند زائد باشد.
-مقاله برای نسخه‌ی مبتنی بر \lr{ARG} یک قضیه‌ی صحت \lrpar{soundness} بیان می‌کند: اگر عبور از یالِ \lr{assume} موجب تقویت predicate نشود، جایگزینی آن با \lr{\texttt{assume(true)}} همچنان شواهد کافی برای صحت قرارداد را حفظ می‌کند.
+\subsubsection{۳) \lr{PC} — تحلیل گزاره‌ای/انتزاعی \lrpar{Predicate Checking}}
+\begin{itemize}
+  \item \textbf{ایده:} اگر عبور از یالِ \lrcode{assume(b)} predicate را تقویت نکند، آن پیش‌شرط در این اثبات «لازم» نبوده است.
+  \item \textbf{ورودی/خروجی:} تحلیل گزاره‌ای + \lr{CEGAR} برای ساخت \lr{ARG}؛ خروجی: پیش‌شرط‌هایی که \lr{precision} انتزاع را تغییر نمی‌دهند.
+  \item \textbf{نقطه‌ضعف:} معمولاً پرهزینه‌تر از \lr{IC/DC} است.
+\end{itemize}
 
 \subsection{ارزیابی تجربی مقاله}
 \paragraph{داده‌ها و بنچمارک}
@@ -114,31 +120,6 @@ BCOR5mm
 مقاله سه تکنیک عملی برای کشف افزونگی پیش‌شرط‌ها ارائه می‌دهد و نشان می‌دهد بین سرعت و دقت یک trade-off جدی وجود دارد.
 به عنوان کار آینده، توسعه‌ی روش‌هایی برای کشف «روابط علّی» بین پیش‌شرط‌ها و پس‌شرط‌ها و همچنین استفاده از \lr{ACSL} برای نوشتن قراردادها پیشنهاد می‌شود.
 در بسته‌ی پروژه، فایل PDF مقاله مرجع نیز پیوست شده است تا خواننده در صورت نیاز به جزئیات کامل، مستقیماً به متن اصلی مراجعه کند.
-
-\subsection{مسئله}
-در «Design by Contract» قراردادها معمولاً با مجموعه‌ای از پیش‌شرط‌ها \lrpar{Preconditions} و پس‌شرط‌ها \lrpar{Postconditions} نوشته می‌شوند.
-هدف مقاله بررسی کیفیت قراردادهاست: آیا برخی پیش‌شرط‌ها \textbf{زائد} هستند (یعنی حتی بدون آن‌ها هم پس‌شرط‌ها برقرار می‌مانند)؟
-
-\subsection{تعریف افزونگی \lrpar{Redundancy}}
-یک پیش‌شرط \lr{\texttt{pre\_i}} در مجموعه \lr{\texttt{Pre}} زائد است اگر برنامه با حذف آن پیش‌شرط، همچنان قرارداد را ارضا کند (به‌صورت \lr{\texttt{P |= (Pre \{pre\_i\}, Post)}}).
-مقاله علاوه بر افزونگی تکی، مفهوم \textbf{افزونگی گروهی} \lrpar{group-redundant} را هم تعریف می‌کند.
-
-\subsection{روش‌های پیشنهادی مقاله}
-مقاله سه تکنیک برای کشف پیش‌شرط‌های زائد ارائه می‌کند:
-\begin{enumerate}
-  \item \textbf{IC \lrpar{Implication Checking}:} بررسی می‌کند آیا \lr{\texttt{pre\_i}} به‌صورت منطقی از بقیه‌ی پیش‌شرط‌ها نتیجه می‌شود یا نه.
-  \item \textbf{DC \lrpar{Dependency Calculation}:} روی CFA توسعه‌یافته، وابستگی‌های داده/کنترل بین \lr{\texttt{assume}}ها و \lr{\texttt{assert}}ها را بررسی می‌کند؛ اگر پیش‌شرط به هیچ پس‌شرطی وابسته نباشد، زائد است (روش نحوی/سینتکتیک).
-  \item \textbf{PC \lrpar{Predicate Checking}:} با \lr{predicate analysis} و \lr{CEGAR} و ساخت \lr{ARG} بررسی می‌کند آیا در یالِ \lrcode{assume(b)}، predicate بعد از آن تغییر/تقویت می‌شود یا نه؛ اگر تقویت نشود، آن پیش‌شرط زائد است.
-\end{enumerate}
-
-\subsection{نتایج تجربی مقاله (خیلی خلاصه)}
-روی 62 برنامه C و 155 پیش‌شرط زائد تزریق‌شده:
-\begin{itemize}
-  \item \lr{IC: 61/155}
-  \item \lr{DC: 62/155}
-  \item \lr{PC: 147/155}
-\end{itemize}
-همچنین PC منابع بیشتری (زمان/حافظه) مصرف می‌کند.
 
 \section{نوآوری این پروژه (افزونگی گروهی با شاهد نقض)}
 \begin{itemize}
@@ -174,7 +155,7 @@ counterexample_if_not_group: {"a": -2, "b": -2}
   \item یک بررسی \lr{IC-like} هم انجام می‌دهد: آیا پیش‌شرط از بقیه‌ی پیش‌شرط‌ها (در همان دامنه محدود) نتیجه می‌شود یا نه.
 \end{itemize}
 
-\subsection{نتایج نمونه \lrpar{Example}}
+\subsection{نتایج نمونه}
 نمونه‌ی \lr{\texttt{examples/sub.json}} نسخه‌ی ساده‌شده‌ی مثال مقاله/اسلاید است (متغیرهای \lr{\texttt{N}} و \lr{\texttt{M}} و حلقه).
 
 \textbf{دستور اجرا:}
@@ -208,9 +189,53 @@ counterexample_if_not_group: {"a": -2, "b": -2}
   \item این مثال نشان می‌دهد چرا روش‌هایی مثل \lr{IC} (صرفاً استنتاج از پیش‌شرط‌ها) برای پوشش همه حالت‌های افزونگی کافی نیستند و باید سراغ روش‌های معنایی‌تر رفت (مثل حذف و بررسی مجدد قرارداد یا روش‌های مبتنی بر تحلیل برنامه).
 \end{itemize}
 
+\subsection{خلاصه‌ی نتایج روی مثال‌ها (قابل ارائه)}
+خلاصه‌ی نتایج روی چند مثال اصلی و چند مثال «واقع‌گرایانه» در جدول~\ref{tab:example-results} آمده است. (خروجی کاملِ هر مثال در مسیر \lr{\url{outputs/}} موجود است.)
+\begin{table}[tb]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{LTR}
+\begin{tabular}{lrrrrl}
+\toprule
+\RL{مثال} & \#Pre & Needed & Redundant & \#IC-implied & \RL{شاهد نقض} \\
+\midrule
+\lr{\texttt{sub}} & 4 & 1 & 3 & 2 & --- \\
+\lr{\texttt{range}} & 3 & 1 & 2 & 0 & --- \\
+\lr{\texttt{group}} & 3 & 0 & 3 & 3 & \lr{\texttt{a=-2,b=-2}} \\
+\midrule
+\lr{\texttt{gen-001}} & 4 & 1 & 3 & 3 & --- \\
+\lr{\texttt{gen-015}} & 4 & 1 & 3 & 3 & --- \\
+\lr{\texttt{gen-034}} & 4 & 0 & 4 & 4 & --- \\
+\bottomrule
+\end{tabular}
+\end{LTR}
+\caption{خلاصه‌ی نتایج روی مثال‌ها (در دامنه‌ی محدودِ تعریف‌شده در هر JSON)}
+\label{tab:example-results}
+\end{table}
+\noindent\textbf{راهنما:}
+\begin{itemize}
+  \item \lr{\texttt{sub}}: \lr{\texttt{examples/sub.json}}
+  \item \lr{\texttt{range}}: \lr{\texttt{examples/range\_redundancy.json}}
+  \item \lr{\texttt{group}}: \lr{\texttt{examples/group\_redundancy.json}}
+  \item \lr{\texttt{gen-001}}: \lr{\texttt{examples/generated/ex\_001.json}} (به همین ترتیب برای سایر \lr{\texttt{gen-***}})
+\end{itemize}
+
 \subsection{مجموعه مثال‌های واقع‌گرایانه (100 مثال)}
 برای اینکه نتایج ابزار فقط محدود به چند مثالِ خیلی کوچک نباشد و مثال‌ها «شبیه ورودی‌های واقعی یک انسان» باشند، مجموعه‌ای از 100 مثال متنوع تولید شد که هر کدام داستان/سناریوی کوتاهی دارد (مثل \lr{clamp} کردن سنسور، اعتبارسنجی بازه، \lr{swap} بازه، جمع 1 تا N، باقی‌مانده با تفریق تکراری و ...).
 این مثال‌ها در مسیر \lr{\url{examples/generated/}} قرار دارند و در فایل زیپ نهایی نیز پیوست شده‌اند.
+
+\paragraph{آمار کلی روی مجموعه مثال‌ها}
+برای اینکه این مجموعه صرفاً «پیوست» نباشد، روی کل 100 مثال اجرا انجام شد و خلاصه‌ی نتایج در فایل \lr{\url{outputs/generated_examples_summary.txt}} ذخیره گردید.
+طبق این خروجی:
+\begin{itemize}
+  \item میانگین تعداد پیش‌شرط‌ها در هر مثال: 4.00
+  \item میانگین پیش‌شرط‌های ضروری: 0.23 (در 23 مثال حداقل یک پیش‌شرط ضروری وجود دارد)
+  \item میانگین پیش‌شرط‌های زائد: 3.77 (در 77 مثال همه‌ی پیش‌شرط‌ها زائد تشخیص داده می‌شوند)
+  \item میانگین پیش‌شرط‌های \lr{IC-like implied}: 3.46
+\end{itemize}
+این اعداد با هدف آموزشیِ این پروژه سازگارند: مثال‌ها طوری طراحی شده‌اند که ابزار بتواند تفاوت روش‌ها را در الگوهای مختلف (به‌خصوص \lr{Range} و \lr{Independency}) نشان دهد.
 
 \textbf{تولید/بازسازی مثال‌ها:}
 \begin{latin}
@@ -219,10 +244,22 @@ counterexample_if_not_group: {"a": -2, "b": -2}
 \end{lstlisting}
 \end{latin}
 
-\subsection{محدودیت‌ها}
-این پیاده‌سازی یک \textbf{prototype آموزشی} است و به‌جای تحلیل کامل C و ابزارهایی مثل \lr{CPAchecker}، از \lr{bounded execution} استفاده می‌کند؛ بنابراین نتیجه‌ها «تضمین کامل برای همه‌ی ورودی‌ها» نیست مگر دامنه ورودی‌ها کامل باشد.
+\textbf{محاسبه‌ی همین آمار:}
+\begin{latin}
+\begin{lstlisting}
+.venv/bin/python -m tools.summarize_generated_examples
+\end{lstlisting}
+\end{latin}
 
-\section{شبیه‌سازی \lrpar{Benchmark}}
+\subsection{محدودیت‌ها}
+این پیاده‌سازی یک \textbf{prototype آموزشی} است و به‌جای تحلیل کامل \lr{C} و ابزارهایی مثل \lr{CPAchecker}، از \lr{bounded execution} استفاده می‌کند؛ بنابراین:
+\begin{itemize}
+  \item نتیجه‌ها فقط برای دامنه‌ی ورودیِ تعریف‌شده در JSON معتبرند (ممکن است بیرون دامنه، افزونگی/غیرافزونگی تغییر کند).
+  \item حدّ گام \lrpar{step\_limit} می‌تواند باعث گزارش‌های کاذبِ «نقض/عدم پایان» شود اگر دامنه یا حدّ گام مناسب انتخاب نشود.
+  \item زبان برنامه/گزاره‌ها کوچک است (بدون فراخوانی تابع/حافظه/تقسیم) و تحلیل‌ها جایگزین روش‌های صنعتی مقاله نیستند.
+\end{itemize}
+
+\section{شبیه‌سازی}
 برای مقایسه‌ی ایده‌های مقاله به‌صورت آموزشی، یک شبیه‌سازی کوچک روی مجموعه‌ای از برنامه‌های مصنوعی انجام شد.
 در هر برنامه یک پیش‌شرط ضروری و سه پیش‌شرط زائد از سه نوعِ \textbf{Independency}، \textbf{Implication} و \textbf{Range} تزریق شد و سه روش زیر مقایسه شدند:
 \begin{itemize}
@@ -240,12 +277,14 @@ counterexample_if_not_group: {"a": -2, "b": -2}
 \end{lstlisting}
 \end{latin}
 
-نتیجه‌ی شبیه‌سازی (39 برنامه، مجموع 117 پیش‌شرط زائد):
+نتیجه‌ی شبیه‌سازی (39 برنامه، مجموع 117 پیش‌شرط زائد) در جدول~\ref{tab:simulation-results} آمده است:
 \begin{table}[tb]
 \centering
+\small
+\begin{LTR}
 \begin{tabular}{lrrrr}
 \toprule
-نوع پیش‌شرط زائد & تعداد واقعی & \lr{IC-like} & \lr{DC-like} & \lr{VC} \\
+\RL{نوع پیش‌شرط زائد} & \RL{تعداد واقعی} & \lr{IC-like} & \lr{DC-like} & \lr{VC} \\
 \midrule
 \lr{Independency} & 39 & 0 & 39 & 39 \\
 \lr{Implication}  & 39 & 39 & 0 & 39 \\
@@ -254,16 +293,61 @@ counterexample_if_not_group: {"a": -2, "b": -2}
 \lr{Total}        & 117 & 39 & 39 & 117 \\
 \bottomrule
 \end{tabular}
+\end{LTR}
+\caption{نتیجه‌ی شبیه‌سازی آموزشی روی 39 برنامه (شمارشِ پیش‌شرط‌های زائدِ تزریق‌شده که توسط هر روش کشف شده‌اند)}
+\label{tab:simulation-results}
 \end{table}
 
-\section{فرآیند اجرای پروژه}
+\section{فرآیند اجرای پروژه (نحوه اجرای کدها و بازتولید نتایج)}
+\textbf{پیش‌نیاز:} \lr{Python 3.12} و دسترسی به یک محیط \lr{Linux} (یا مشابه).
 \begin{enumerate}
-  \item انتخاب مقاله مرجع و مطالعه (PDF مقاله + اسلاید).
-  \item استخراج تعاریف کلیدی (افزونگی تکی/گروهی، ایده‌ی روش‌های IC/DC/PC).
-  \item پیاده‌سازی یک prototype کوچک برای بازتولید ایده‌ی «حذف پیش‌شرط و بررسی دوباره» در قالب bounded checking.
-  \item ساخت مجموعه مثال‌های واقع‌گرایانه و اجرای ابزار روی مثال‌ها و ثبت نتایج.
-  \item آماده‌سازی گزارش و بسته‌ی نهایی زیپ.
+  \item \textbf{ساخت محیط و نصب وابستگی‌ها:}
+  \begin{latin}
+  \begin{lstlisting}
+python3.12 -m venv .venv
+. .venv/bin/activate
+pip install -r requirements.txt
+  \end{lstlisting}
+  \end{latin}
+
+  \item \textbf{اجرای مثال‌های اصلی (تولید خروجی‌های پوشه \lr{\url{outputs/}}):}
+  \begin{latin}
+  \begin{lstlisting}
+.venv/bin/python main.py --spec examples/sub.json
+.venv/bin/python main.py --spec examples/range_redundancy.json
+.venv/bin/python main.py --spec examples/group_redundancy.json --group
+  \end{lstlisting}
+  \end{latin}
+
+  \item \textbf{اجرای شبیه‌سازی:}
+  \begin{latin}
+  \begin{lstlisting}
+.venv/bin/python main.py --simulate --sim_n=39 --sim_seed=1
+  \end{lstlisting}
+  \end{latin}
+
+  \item \textbf{آمارگیری از مثال‌های تولیدی:}
+  \begin{latin}
+  \begin{lstlisting}
+.venv/bin/python -m tools.summarize_generated_examples
+  \end{lstlisting}
+  \end{latin}
+
+  \item \textbf{ساخت PDF گزارش:}
+  \begin{latin}
+  \begin{lstlisting}
+tools/bin/tectonic -X compile --outdir docs docs/final_report.tex
+  \end{lstlisting}
+  \end{latin}
+
+  \item \textbf{ساخت فایل زیپ تحویل:}
+  \begin{latin}
+  \begin{lstlisting}
+.venv/bin/python make_submission_zip.py MahdiMalverdi 404443150
+  \end{lstlisting}
+  \end{latin}
 \end{enumerate}
+\noindent\textbf{نکته:} این پروژه تستِ واحد \lrpar{unit test} جداگانه ندارد؛ «تست» در اینجا به معنی اجرای مثال‌ها و بازتولید خروجی‌های ثبت‌شده است.
 
 \section{کدهای پروژه / گیت‌هاب}
 \begin{itemize}

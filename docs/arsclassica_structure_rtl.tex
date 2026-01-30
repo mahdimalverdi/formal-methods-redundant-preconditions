@@ -56,12 +56,11 @@
 \setmonofont{DejaVu Sans Mono}
 
 % Helpers for mixed RTL/LTR punctuation.
-% In RTL paragraphs, parentheses around LTR text can appear visually reversed.
-% Wrap LTR parenthetical phrases with \lrpar{...} to keep parentheses direction.
-\providecommand{\textLR}[1]{\beginL #1\endL}
-\newcommand{\LRM}{\char"200E}
-\newcommand{\lrpar}[1]{\LRM\textLR{(#1)}\LRM}
-\newcommand{\lrcode}[1]{\LRM\textLR{\texttt{#1}}\LRM}
+% Wrap LTR parenthetical phrases with \lrpar{...}.
+% (The \lr macro is provided by xepersian and tends to render parentheses
+% correctly in RTL context.)
+\newcommand{\lrpar}[1]{\lr{(#1)}}
+\newcommand{\lrcode}[1]{\lr{\texttt{#1}}}
 
 % Headers/footers (load after bidi/xepersian for correct RTL handling)
 \usepackage{scrlayer-scrpage}

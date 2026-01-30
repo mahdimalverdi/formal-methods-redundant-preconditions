@@ -1,0 +1,16 @@
+{
+  "examples_dir": "examples/generated",
+  "num_examples": 100,
+  "avg_pre": 4.0,
+  "avg_needed": 0.23,
+  "avg_redundant": 3.77,
+  "avg_ic_implied": 3.46,
+  "count_all_pre_redundant": 77,
+  "count_has_needed_pre": 23,
+  "min_pre": 4,
+  "max_pre": 4,
+  "min_needed": 0,
+  "max_needed": 1,
+  "min_redundant": 3,
+  "max_redundant": 4
+}
